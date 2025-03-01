@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'nu.studer.rocker' version '3.0.4'
+}
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation files('libs\\phoenix-0.0.3-plain.jar')
+    implementation 'com.fizzed:rocker-runtime:1.4.0'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    implementation 'org.apache.commons:commons-text:1.11.0'
+    implementation 'com.fizzed:rocker-compiler:1.4.0'
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'org.reflections:reflections:0.10.2'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+rocker {
+    configurations{
+        main {
+            templateDir = file('src/main/resources/rocker')
+            outputDir = file('src/generated/rocker')
+            optimize = true  // optional
+        }
+    }
+}
